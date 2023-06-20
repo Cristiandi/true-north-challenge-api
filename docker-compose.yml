@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: truenorth_challenge
+    restart: "no"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: toor
+      POSTGRES_DB: truenorth_challenge_db
