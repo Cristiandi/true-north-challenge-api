@@ -13,6 +13,7 @@ import { UserService } from '../user/user.service';
 
 import { OperateInput } from './dto/operate-input.dto';
 import { GetUserRecordsInput } from './dto/get-user-records-input.dto';
+import { GetOneRecordInput } from './dto/get-one-record-input.dto';
 
 @Injectable()
 export class RecordService extends BaseService<Record> {
@@ -122,5 +123,21 @@ export class RecordService extends BaseService<Record> {
       count,
       data: records,
     };
+  }
+
+  async delete(input: GetOneRecordInput) {
+    const { uid } = input;
+
+    const existingRecord = await this.getOneByFields({
+      fields: {
+        uid,
+      },
+      checkIfExists: true,
+      loadRelationIds: false,
+    });
+
+    const deletedRecord = await this.recordRepository.remove(existingRecord);
+
+    return deletedRecord;
   }
 }
