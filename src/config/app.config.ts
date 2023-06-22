@@ -23,5 +23,8 @@ export default registerAs('config', () => {
         customerCode: process.env.BASIC_ACL_CUSTOMER_ROLE_CODE,
       },
     },
+    randomOrg: {
+      url: process.env.RANDOM_ORG_URL,
+    },
   };
 });

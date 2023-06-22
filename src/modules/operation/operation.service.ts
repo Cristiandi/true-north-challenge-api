@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,6 +8,7 @@ import appConfig from '../../config/app.config';
 import { Operation, OperationType } from './operation.entity';
 
 import { BaseService } from '../../base.service';
+import { RandomOrgService } from '../../plugins/random-org/random-org.service';
 
 import { CalculateOperationInput } from './dto/calculate-operation-input.dto';
 
@@ -18,6 +19,7 @@ export class OperationService extends BaseService<Operation> {
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Operation)
     private readonly userRepository: Repository<Operation>,
+    private readonly randomOrgService: RandomOrgService,
   ) {
     super(userRepository);
   }
@@ -52,8 +54,10 @@ export class OperationService extends BaseService<Operation> {
         };
         break;
       case OperationType.RANDOM_STRING:
+        const randomString = await this.randomOrgService.getRandomString();
+
         return {
-          result: Math.random().toString(36).substring(2, 15),
+          result: randomString,
         };
         break;
 

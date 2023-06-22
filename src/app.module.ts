@@ -14,6 +14,7 @@ import { CommonModule } from './common/common.module';
 import { UserModule } from './modules/user/user.module';
 import { OperationModule } from './modules/operation/operation.module';
 import { RecordModule } from './modules/record/record.module';
+import { RandomOrgModule } from './plugins/random-org/random-org.module';
 
 @Module({
   imports: [
@@ -43,6 +44,8 @@ import { RecordModule } from './modules/record/record.module';
     OperationModule,
 
     RecordModule,
+
+    RandomOrgModule,
   ],
   controllers: [AppController],
   providers: [AppService],
