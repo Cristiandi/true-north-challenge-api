@@ -27,6 +27,7 @@ export class UserService extends BaseService<User> {
   }
 
   async register(input: RegisterUserInput) {
+    console.log('testing husky 0');
     const { email, password } = input;
 
     // check if user already exists by email
