@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
@@ -30,6 +29,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar' })
   status: string;
+
+  @Column({ type: 'int', nullable: true })
+  balance: number;
 
   @OneToMany(() => Record, (record) => record.user)
   records: Record[];

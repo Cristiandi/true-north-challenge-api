@@ -27,20 +27,6 @@ export class RecordService extends BaseService<Record> {
     super(recordRepository);
   }
 
-  private async getUserBalance(input: { userId: number }) {
-    const { userId } = input;
-
-    const lastUserRecord = await this.recordRepository
-      .createQueryBuilder('record')
-      .where('record.user = :userId', { userId })
-      .orderBy('record.createdAt', 'DESC')
-      .getOne();
-
-    return lastUserRecord
-      ? lastUserRecord.userBalance
-      : this.appConfiguration.app.initialBalance;
-  }
-
   async operate(input: OperateInput) {
     const { userAuthUid, operation, a, b } = input;
 
@@ -62,13 +48,8 @@ export class RecordService extends BaseService<Record> {
       }),
     ]);
 
-    // get the user balance
-    const userBalance = await this.getUserBalance({
-      userId: existingUser.id,
-    });
-
     // check if the user has enough balance
-    if (userBalance < existingOperation.cost) {
+    if (existingUser.balance < existingOperation.cost) {
       throw new ConflictException('user does not have enough balance');
     }
 
@@ -76,7 +57,7 @@ export class RecordService extends BaseService<Record> {
     const createdRecord = this.recordRepository.create({
       user: existingUser,
       operation: existingOperation,
-      userBalance: userBalance - existingOperation.cost,
+      userBalance: existingUser.balance - existingOperation.cost,
       operationResponse: await this.operationService.calculate({
         type: operation,
         a,
@@ -84,7 +65,19 @@ export class RecordService extends BaseService<Record> {
       }),
     });
 
-    const savedRecord = await this.recordRepository.save(createdRecord);
+    const [, savedRecord] = await Promise.all([
+      // update the user balance
+      this.userService.update(
+        {
+          authUid: userAuthUid,
+        },
+        {
+          balance: existingUser.balance - existingOperation.cost,
+        },
+      ),
+      // save the record
+      this.recordRepository.save(createdRecord),
+    ]);
 
     return savedRecord;
   }

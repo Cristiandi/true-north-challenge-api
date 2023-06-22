@@ -11,6 +11,8 @@ import { User, UserStatus } from './user.entity';
 import { BaseService } from '../../base.service';
 
 import { RegisterUserInput } from './dto/register-user-input.dto';
+import { GetOneUserInput } from './dto/get-one-user-input.dto';
+import { UpdateUserInput } from './dto/update-user-input.dto';
 
 @Injectable()
 export class UserService extends BaseService<User> {
@@ -52,6 +54,7 @@ export class UserService extends BaseService<User> {
         authUid,
         email,
         status: UserStatus.ACTIVE,
+        balance: this.appConfiguration.app.initialBalance,
       });
 
       const savedUser = await this.userRepository.save(createdUser);
@@ -65,5 +68,39 @@ export class UserService extends BaseService<User> {
         authUid: aclUser.authUid,
       });
     }
+  }
+
+  async update(getOneUserInput: GetOneUserInput, input: UpdateUserInput) {
+    const { authUid } = getOneUserInput;
+
+    const { email, balance } = input;
+
+    // get the user
+    const existingUser = await this.getOneByFields({
+      fields: {
+        authUid,
+      },
+      checkIfExists: true,
+      loadRelationIds: false,
+    });
+
+    // update the user in the ACL system
+    if (email) {
+      await this.basicAclService.changeEmail({
+        authUid,
+        email,
+      });
+    }
+
+    // update the user in the database
+    const preloadedUser = await this.userRepository.preload({
+      id: existingUser.id,
+      email,
+      balance,
+    });
+
+    const savedUser = await this.userRepository.save(preloadedUser);
+
+    return savedUser;
   }
 }
