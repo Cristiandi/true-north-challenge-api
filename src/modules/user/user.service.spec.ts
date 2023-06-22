@@ -25,7 +25,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({});
 type MockBasicAclService = Partial<Record<keyof BasicAclService, jest.Mock>>;
 const createMockBasicAclService = (): MockBasicAclService => ({});
 
-describe('OperationService1', () => {
+describe('OperationService', () => {
   let service: UserService;
   let userRepository: MockRepository<User>;
   let basicAclService: MockBasicAclService;
