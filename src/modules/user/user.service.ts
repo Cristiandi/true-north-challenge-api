@@ -67,6 +67,8 @@ export class UserService extends BaseService<User> {
       await this.basicAclService.deleteUser({
         authUid: aclUser.authUid,
       });
+
+      throw error;
     }
   }
 

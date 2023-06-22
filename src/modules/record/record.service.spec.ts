@@ -117,4 +117,47 @@ describe('RecordService', () => {
       }
     });
   });
+
+  describe('getUserRecords', () => {
+    it('should return an array of records', async () => {
+      const input: GetUserRecordsInput = {
+        userAuthUid: 'user-auth-uid',
+      };
+
+      userService.getOneByFields = jest.fn().mockResolvedValue({});
+
+      recordRepository.createQueryBuilder = jest.fn(() => {
+        return {
+          innerJoin: jest.fn().mockReturnThis(),
+          where: jest.fn().mockReturnThis(),
+          take: jest.fn().mockReturnThis(),
+          skip: jest.fn().mockReturnThis(),
+          orderBy: jest.fn().mockReturnThis(),
+          getManyAndCount: jest.fn().mockResolvedValue([[{}], 1]),
+        };
+      });
+
+      const result = await service.getUserRecords(input);
+
+      expect(result).toEqual({
+        count: 1,
+        data: [{}],
+      });
+    });
+  });
+
+  describe('delete', () => {
+    it('it should delete a record', async () => {
+      const input: GetOneRecordInput = {
+        uid: 'record-uid',
+      };
+
+      service.getOneByFields = jest.fn().mockResolvedValue({});
+      recordRepository.remove = jest.fn().mockResolvedValue({});
+
+      const result = await service.delete(input);
+
+      expect(result).toEqual({});
+    });
+  });
 });

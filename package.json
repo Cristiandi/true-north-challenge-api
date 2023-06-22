@@ -27,6 +27,8 @@
     "db:seed": "ts-node ./src/database/seeds/index.ts"
   },
   "dependencies": {
+    "@commitlint/cli": "17.6.5",
+    "@commitlint/config-conventional": "17.6.5",
     "@nestjs/axios": "3.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "2.3.2",
@@ -37,6 +39,9 @@
     "axios": "1.4.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
+    "commitizen": "4.3.0",
+    "husky": "8.0.3",
+    "lint-staged": "13.2.2",
     "nestjs-basic-acl-sdk": "0.4.1",
     "pg": "8.11.0",
     "reflect-metadata": "^0.1.13",
@@ -85,5 +90,19 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint"
+    ],
+    "*.ts": [
+      "npm run lint",
+      "npm run test"
+    ]
   }
 }

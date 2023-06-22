@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-
-import appConfig from '../../config/app.config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, timeout } from 'rxjs';
+
+import appConfig from '../../config/app.config';
 
 @Injectable()
 export class RandomOrgService {
