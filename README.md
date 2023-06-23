@@ -47,7 +47,6 @@ This documentation provides details about the endpoints.
       "password": "hola123"
   }
   ```
-- **Response**: No response example provided.
 
 ### 2. Records - Operation
 
@@ -63,7 +62,6 @@ This documentation provides details about the endpoints.
       "b": 2
   }
   ```
-- **Response**: No response example provided.
 
 ### 3. Records - Get User Records
 
@@ -77,20 +75,12 @@ This documentation provides details about the endpoints.
   - `skip`: 0
   - `orderBy`: id
   - `order`: DESC
-- **Response**: No response example provided.
 
-### 4. Users - Get ID Token
+### 4. Records - Delete Record
 
-- **Endpoint**: `POST /identitytoolkit/v3/relyingparty/verifyPassword`
-- **Description**: Retrieves the ID token for a user.
-- **Request Body**:
-  ```json
-  {
-      "email": "stan.marsh@southpark.com",
-      "password": "hola123",
-      "returnSecureToken": true
-  }
-  ```
-- **Response**: No response example provided.
+- **Endpoint**: `DELETE /api/v1/records`
+- **Description**: Deletes a record.
+- **Query Parameters**:
+  - `uid`: O0IYvGjnPWXy4KxXlSc3YxnoxuZ2
 
 ---
