@@ -56,7 +56,7 @@ This documentation provides details about the endpoints.
 - **Request Body**:
   ```json
   {
-      "userAuthUid": "MzSwkrzXTJfNaSDm0FKcHX4rdKd2",
+      "userAuthUid": "{{userAuthUid}}",
       "operation": "subtraction",
       "a": 1,
       "b": 2
@@ -69,7 +69,7 @@ This documentation provides details about the endpoints.
 - **Description**: Retrieves user records.
 - **Authentication**: Bearer Token
 - **Query Parameters**:
-  - `userAuthUid`: O0IYvGjnPWXy4KxXlSc3YxnoxuZ2
+  - `userAuthUid`: {{userAuthUid}}
   - `q`: (optional)
   - `take`: 5
   - `skip`: 0
@@ -81,6 +81,6 @@ This documentation provides details about the endpoints.
 - **Endpoint**: `DELETE /api/v1/records`
 - **Description**: Deletes a record.
 - **Query Parameters**:
-  - `uid`: O0IYvGjnPWXy4KxXlSc3YxnoxuZ2
+  - `uid`: {{uid}}
 
 ---
