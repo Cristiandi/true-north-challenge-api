@@ -153,7 +153,7 @@ describe('RecordService', () => {
       };
 
       service.getOneByFields = jest.fn().mockResolvedValue({});
-      recordRepository.remove = jest.fn().mockResolvedValue({});
+      recordRepository.softRemove = jest.fn().mockResolvedValue({});
 
       const result = await service.delete(input);
 

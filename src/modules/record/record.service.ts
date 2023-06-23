@@ -136,7 +136,9 @@ export class RecordService extends BaseService<Record> {
       loadRelationIds: false,
     });
 
-    const deletedRecord = await this.recordRepository.remove(existingRecord);
+    const deletedRecord = await this.recordRepository.softRemove(
+      existingRecord,
+    );
 
     return deletedRecord;
   }

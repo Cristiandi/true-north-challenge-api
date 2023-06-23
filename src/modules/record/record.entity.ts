@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Generated,
   JoinColumn,
@@ -34,6 +35,9 @@ export class Record extends BaseEntity {
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz' })
+  deletedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.records)
   @JoinColumn({ name: 'user_id' })
